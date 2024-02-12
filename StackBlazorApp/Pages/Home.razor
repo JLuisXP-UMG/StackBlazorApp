@@ -1,0 +1,74 @@
+﻿@page "/"
+
+<PageTitle>Stack Management</PageTitle>
+
+<h1>Estructura de datos PILA</h1>
+<hr />
+<input class="form-control" type="number" @bind="Valor" />
+
+<button @onclick="Apilar" class="btn btn-success">Apilar</button>
+<button @onclick="Desapilar" class="btn btn-warning">Desapilar</button>
+
+<hr />
+
+<table class="table table-bordered table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>
+                Valor
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in PILA.Where(x=>x != 0))
+        {
+            <tr>
+                <td>@item</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@code{
+
+
+    int[] PILA;
+
+    int TOPE;
+
+    int Valor;
+
+    protected override void OnInitialized()
+    {
+        PILA = new int[5];
+        TOPE = 0;
+        Valor = 0;
+    }
+
+    bool PilaVacia() => TOPE == 0;
+
+    bool PilaLlena() => TOPE >= PILA.Length;
+
+    void Apilar()
+    {
+        if (PilaLlena()) return;
+
+        PILA[TOPE] = Valor;
+
+        TOPE++;
+
+        Valor = 0;
+    }
+
+    void Desapilar()
+    {
+        if (PilaVacia()) return;
+
+        PILA[TOPE - 1] = 0;
+
+        TOPE--;
+
+    }
+
+}
